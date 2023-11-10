@@ -13,6 +13,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 # running migrations
 RUN python manage.py migrate
 
+EXPOSE 80
+
 # gunicorn
-CMD ["gunicorn", "--config", "gunicorn-cfg.py", "core.wsgi"]
+#CMD ["gunicorn", "--config", "gunicorn-cfg.py", "core.wsgi"]
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
 

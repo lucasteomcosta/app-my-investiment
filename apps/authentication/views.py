@@ -2,7 +2,7 @@
 """
 Copyright (c) 2019 - present AppSeed.us
 """
-
+from django.http import JsonResponse
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -54,3 +54,11 @@ def register_user(request):
         form = SignUpForm()
 
     return render(request, "accounts/register.html", {"form": form, "msg": msg, "success": success})
+
+def healthCheck(request):
+    print("----------------health_check---------------------")
+    data = {
+        'status': 'ok',
+        'message': 'Application is healthy',
+    }
+    return JsonResponse(data)
