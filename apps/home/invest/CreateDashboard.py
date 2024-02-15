@@ -19,9 +19,9 @@ class CreateDashboard:
 
         diretorio_atual = os.path.dirname(os.path.abspath(__file__))
         caminho_arquivo = os.path.join(diretorio_atual, 'movimentacao_saida.xlsx')
-        #df = invest.obter_dados_carteiras()
+        df = invest.obter_dados_carteiras()
         #df = pd.read_excel(caminho_arquivo)
-        df = invest.find_by_max_data_pre_carteira()
+        #df = invest.find_by_max_data_pre_carteira()
 
         print("=========================SAVE=========================")
         # for _, row in df.iterrows():

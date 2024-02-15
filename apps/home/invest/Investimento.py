@@ -276,7 +276,8 @@ class Investimento:
                 else:
                     return 0
             if ativo in map_criptomoedas:
-                return self.obter_valores_cripto(map_criptomoedas.get(ativo))
+                print('----- cripto_moeda ------' + ativo)
+                return self.obter_valores_outros_ativos(ativo)
             if ativo.find('GARDE_PORTHOS_FIC_FIM') != -1:
                 return self.obter_valores_outros_ativos('PORTHOS')
             if ativo.find('KINEA_ATLAS_II_FIM') != -1:
@@ -387,7 +388,7 @@ class Investimento:
         return df
 
 
-    def ajustar_excedente(self, ativo, df):
+    def ajustar_excedente(self, ativo, df, tipo):
         print('----- ajustar_excedente ------' + ativo)
         quantidade_ativo_excedente = df.loc[df['Ativo'] == ativo, 'Quantidade'].values[0]
         print("quantidade_ativo_excedente: " + str(quantidade_ativo_excedente))
@@ -395,8 +396,14 @@ class Investimento:
         print("quantidade_ativo_excedente: " + str(quantidade_ativo_excedente))
         total_ativo_excedente = quantidade_ativo_excedente * valor_ativo_excedente
         print("total_ativo_excedente: " + str(total_ativo_excedente))
-        if total_ativo_excedente > 5000:
-            quantidade_ativo_ajustada = (quantidade_ativo_excedente * 5790) / total_ativo_excedente
+        if total_ativo_excedente > 5000 and tipo == 'IPCA':
+            quantidade_ativo_ajustada = (quantidade_ativo_excedente * 10357) / total_ativo_excedente
+            print("quantidade_ativo_ajustada: " + str(quantidade_ativo_ajustada))
+            quantidade_restante = quantidade_ativo_excedente - quantidade_ativo_ajustada
+            print("quantidade_ativo_ajustada: " + str(quantidade_ativo_ajustada))
+
+        if total_ativo_excedente > 5000 and tipo == 'SELIC':
+            quantidade_ativo_ajustada = (quantidade_ativo_excedente * 6905) / total_ativo_excedente
             print("quantidade_ativo_ajustada: " + str(quantidade_ativo_ajustada))
             quantidade_restante = quantidade_ativo_excedente - quantidade_ativo_ajustada
             print("quantidade_ativo_ajustada: " + str(quantidade_ativo_ajustada))
@@ -414,10 +421,10 @@ class Investimento:
         self.imprimir_se(dados_carteira_evol_df,True)
         dados_carteira_evol_df.loc[
             dados_carteira_evol_df['Ativo'] == 'Tesouro Selic 2026', 'Quantidade'] = self.ajustar_excedente(
-            'Tesouro Selic 2026', dados_carteira_evol_df)
+            'Tesouro Selic 2026', dados_carteira_evol_df, 'SELIC')
         dados_carteira_evol_df.loc[
             dados_carteira_evol_df['Ativo'] == 'Tesouro IPCA+ 2045', 'Quantidade'] = self.ajustar_excedente(
-            'Tesouro IPCA+ 2045', dados_carteira_evol_df)
+            'Tesouro IPCA+ 2045', dados_carteira_evol_df, 'IPCA')
 
         self.imprimir_se(dados_carteira_evol_df,True)
         return dados_carteira_evol_df
