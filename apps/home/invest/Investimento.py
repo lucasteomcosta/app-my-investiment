@@ -12,6 +12,7 @@ import os
 
 from apps.home.invest.Cateira import Carteira
 from apps.home.invest.ConexaoMongoDB import ConexaoMongoDB
+from apps.home.invest.invetv2 import ProcessarInvestimento
 
 
 class Investimento:
@@ -288,7 +289,7 @@ class Investimento:
                 return self.obter_valores_outros_ativos('ACCESS_LEGACY')
             if ativo.find('CDB_BANCO_DAYCOVAL') != -1:
                #valor = self.obter_valores_outros_ativos('CDB_BANCO_DAYCOVAL')
-               return 12021
+               return 13589
             if ativo.find('WA_IMAB5_ATIVO_FI_RF') != -1:
                 return self.obter_valores_outros_ativos('WA_IMAB5_ATIVO_FI_RF')
 
@@ -631,7 +632,7 @@ class Investimento:
 
     def calcular_valorizacao_valor_ativo(self, ativo, df_filtrado):
         valor_compra =  df_filtrado.loc[df_filtrado['Ativo'] == ativo, 'Preco_medio'].values[0]
-        quantidade =  df_filtrado.loc[df_filtrado['Ativo'] == ativo, 'Quantidade'].values[0]
+        quantidade =  df_filtrado.loc[df_filtrado['Ativo'] == ativo, ProcessarInvestimento.QUANTIDADE].values[0]
         valor_ativo_total =  df_filtrado.loc[df_filtrado['Ativo'] == ativo, 'valor_ativo_total'].values[0]
         valor_total_compra = quantidade * valor_compra
         rentabilidade_valor = valor_ativo_total - valor_total_compra

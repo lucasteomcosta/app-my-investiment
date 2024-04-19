@@ -10,7 +10,7 @@ from django.template import loader
 from django.urls import reverse
 from plotly.offline import plot
 
-from .invest.CreateDashboard import CreateDashboard
+from .invest.invetv2.CreateDashboard import CreateDashboard
 
 
 @login_required(login_url="/login/")
@@ -69,15 +69,15 @@ def carregar_dashboard():
     fig_bar_valor_ajuste_por_ativo = gerar_deshboard.obter_dash_bar_valor_ajuste_por_ativo(invest, df)
     plotly_bar_valor_ajuste_por_ativo = plot({'data': fig_bar_valor_ajuste_por_ativo}, output_type='div')
 
-    total_todos_investimentos = invest.obter_valor_total_todos_investimentos()
+    #total_todos_investimentos = invest.obter_valor_total_todos_investimentos()
 
-    valor_total_ajuste = invest.obter_valor_total_ajuste(df)
-    total_investido = invest.obter_valor_total_investido(df)
-    total_compra = invest.obter_valor_total_compra(df)
+    #valor_total_ajuste = invest.obter_valor_total_ajuste(df)
+    #total_investido = invest.obter_valor_total_investido(df)
+    #total_compra = invest.obter_valor_total_compra(df)
 
-    percentual_rentabilidade = ((total_investido - total_compra)/total_compra) * 100
-    print(total_compra)
-    invest.imprimir_se(df, True)
+    #percentual_rentabilidade = ((total_investido - total_compra)/total_compra) * 100
+    #print(total_compra)
+    print("=========================P4=========================")
     df_ativos = invest.obter_dados_df_ativo(df)
     itens_list = df_ativos.to_dict(orient='records')
 
@@ -86,10 +86,10 @@ def carregar_dashboard():
                'plotly_bar_valor_ajuste_categoria': plotly_bar_valor_ajuste_categoria,
                'plotly_bar_valor_ajuste_por_ativo': plotly_bar_valor_ajuste_por_ativo,
                'total_investido': total_investido,
-               'percentual_rentabilidade': percentual_rentabilidade,
-               'total_compra': total_compra,
-               'valor_total_ajuste': valor_total_ajuste,
-               'total_todos_investimentos': total_todos_investimentos,
+               'percentual_rentabilidade': 0,#percentual_rentabilidade,
+               'total_compra': 0,#total_compra,
+               'valor_total_ajuste': 0,#valor_total_ajuste,
+               'total_todos_investimentos': 0,#total_todos_investimentos,
                'df_ativos': itens_list
                }
 
